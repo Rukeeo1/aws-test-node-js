@@ -111,4 +111,5 @@ app.get('/get-shoes', (req, res) => {
 const port = 3000;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
+  logger.info(`Server is running on port ${port}`);
 });
