@@ -1,4 +1,5 @@
 const mysql = require('mysql');
+const logger = require('./logger');
 
 const con = mysql.createConnection({
   host: process.env.DB_HOST,
@@ -12,13 +13,17 @@ const con = mysql.createConnection({
 con.connect((error, result) => {
   if (error) {
     console.error('Error connecting to the database: ', error);
+    logger.error('Error connecting to the database: ', error);
   } else {
     console.log('Connected to the MySQL database!');
+    logger.info('Connected to the MySQL database!');
     con.query('CREATE DATABASE IF NOT EXISTS node_express_db', (error) => {
       if (error) {
         console.error('Error creating database: ', error);
+        logger.error('Error connecting to the database: ', error);
       } else {
         console.log('Database created or already exists!');
+        logger.info('Database created or already exists!');
       }
     });
 
@@ -42,6 +47,7 @@ con.connect((error, result) => {
       con.query(shoes, function (err, result) {
         if (err) throw err;
         console.log("shoes table created");
+        logger.info("shoes table created");
       });
   }
 });
