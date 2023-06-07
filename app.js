@@ -9,7 +9,12 @@ const shoes = require('./seedData');
 const app = express();
 // seed database...
 
-app.use(cors({origin: '*'}));
+// app.use(cors({origin: '*'}));
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
 
 // Middleware to log requests
 app.use((req, res, next) => {
@@ -43,7 +48,7 @@ app.get('/get-shoes', (req, res) => {
   logger.info('getting people...');
   //   const newShoe = req.body;
   const sql = 'SELECT * FROM shoes';
-  res.json(shoes);
+//   res.status(200).json(shoes);
 
   db.query(sql, (err, result) => {
     if (err) {
@@ -51,7 +56,7 @@ app.get('/get-shoes', (req, res) => {
       logger.error('Error getting shoes', JSON.stringify(err));
     } else {
       logger.info('Shoes retrieved', JSON.stringify(result));
-      res.json(result);
+      res.status(200).json(result);
     }
   });
 });
